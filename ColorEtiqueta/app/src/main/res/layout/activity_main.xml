@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/messageView"
+        android:layout_width="410dp"
+        android:layout_height="48dp"
+        android:background="@color/black"
+        android:text="@string/main_activity_message"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="1dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/radioGroupElement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/messageColorButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/main_activity_radiobutton_message_color"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="147dp" />
+
+            <RadioButton
+                android:id="@+id/backgroundColorButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_activity_radiobutton_background_color"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="99dp" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/radioGroupColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/buttonColorRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/main_activity_radiobutton_red"
+                android:textColor="@color/red"
+                tools:layout_editor_absoluteX="211dp"
+                tools:layout_editor_absoluteY="99dp" />
+
+            <RadioButton
+                android:id="@+id/buttonColorGreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_activity_radiobutton_green"
+                android:textColor="@color/green"
+                tools:layout_editor_absoluteX="211dp"
+                tools:layout_editor_absoluteY="147dp" />
+
+            <RadioButton
+                android:id="@+id/buttonColorBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_activity_radiobutton_blue"
+                android:textColor="@color/blue"
+                tools:layout_editor_absoluteX="211dp"
+                tools:layout_editor_absoluteY="195dp" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/visibilityCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/main_activity_checkbox_visibility"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="277dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:onClick="ejecutar"
+        android:text="@string/main_activity_button_execute"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="325dp" />
+
+</LinearLayout>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ColorEtiqueta</string>
+    <string name="main_activity_message">MENSAJE</string>
+    <string name="main_activity_radiobutton_background_color">Color de Fondo</string>
+    <string name="main_activity_radiobutton_message_color">Color de Mensaje</string>
+    <string name="main_activity_radiobutton_red">Rojo</string>
+    <string name="main_activity_radiobutton_blue">Azul</string>
+    <string name="main_activity_radiobutton_green">Verde</string>
+    <string name="main_activity_checkbox_visibility">Visible</string>
+    <string name="main_activity_button_execute">EJECUTAR</string>
+</resources>
