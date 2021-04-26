@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">DatosPersona</string>
-    <string name="title_name">Lista</string>
+    <string name="title">Lista</string>
     <string name="activity_main_add_button">Añadir</string>
-    <string name="activity_main_Exit_button">Salir</string>
+    <string name="activity_main_exit_button">Salir</string>
 
     <string name="activity_new_user_activity_name_input_text">Nombre</string>
     <string name="activity_new_user_activity_surname_input_text">Apellidos</string>

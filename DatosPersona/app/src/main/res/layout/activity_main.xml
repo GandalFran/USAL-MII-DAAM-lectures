@@ -5,23 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="45dp"
+    android:padding="50dp"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_name"
+        android:text="@string/title"
         android:textColor="@color/orange"
-        android:textStyle="bold"
-        android:textSize="30sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/peopleListScrollView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
@@ -30,11 +28,11 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
             <TextView
-                android:id="@+id/peopleListTextView"
+                android:id="@+id/usersTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:textSize="13dp"/>
+                android:textSize="15dp"/>
         </HorizontalScrollView>
     </ScrollView>
 
@@ -42,17 +40,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="25dp"
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/addPersonButton"
+            android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="addUser"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:text="@string/activity_main_add_button" />
 
         <Button
@@ -60,10 +58,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="exit"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="@string/activity_main_Exit_button" />
+            android:onClick="cancel"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:text="@string/activity_main_exit_button" />
     </LinearLayout>
 
 </LinearLayout>

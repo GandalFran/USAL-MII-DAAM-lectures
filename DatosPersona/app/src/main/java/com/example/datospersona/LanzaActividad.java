@@ -30,8 +30,9 @@ public class LanzaActividad extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_user);
+        setContentView(R.layout.activity_lanza_actividad);
 
         // retrieve inputs
         this.ageInput = findViewById(R.id.ageInput);
@@ -47,10 +48,11 @@ public class LanzaActividad extends AppCompatActivity {
     }
 
     public void changeDate(View view) {
-        // Get current date in calendar format
+
+        // get current date in calendar format
         Calendar c = Calendar.getInstance();
 
-        // Display and add event listener to update date in user. Also set the stored date for user as default
+        // display and add event listener to update date in user. Also set the stored date for user as default
         DatePickerDialog dpd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -62,6 +64,7 @@ public class LanzaActividad extends AppCompatActivity {
     }
 
     public void addUser(View view) {
+
         // retrieve user data
         String age = this.ageInput.getText().toString();
         String name = this.nameInput.getText().toString();
@@ -85,7 +88,7 @@ public class LanzaActividad extends AppCompatActivity {
             phone = "Unknown";
         }
 
-        // Return data to main activity
+        // return data to main activity
         // NOTE: it also clears activity stack with FLAG_ACTIVITY_CLEAR_TOP
         Intent intentResult = new Intent(this, MainActivity.class);
         intentResult.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -103,13 +106,15 @@ public class LanzaActividad extends AppCompatActivity {
 
     public void reset(View view) {
         this.nameInput.getText().clear();
-        this.surnameInput.getText().clear();
         this.ageInput.getText().clear();
         this.phoneInput.getText().clear();
-        this.drivingLicenseInput.toggle();
         this.englishLevelInput.clearCheck();
+        this.surnameInput.getText().clear();
         this.dateInput.setText(this.getFormattedDate());
-        this.englishLevelInput.check(R.id.lowLevelRadioButton);
+        this.englishLevelInput.check(R.id.lowLevelEnglish);
+        if (this.drivingLicenseInput.isChecked()){
+            this.drivingLicenseInput.toggle();
+        }
     }
 
     public void cancel(View view) {

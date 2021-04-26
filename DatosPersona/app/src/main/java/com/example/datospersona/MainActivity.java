@@ -21,12 +21,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // retrieve component and update user list
-        this.userCanvas = findViewById(R.id.peopleListTextView);
+        this.userCanvas = findViewById(R.id.usersTextView);
         this.userCanvas.setText(this.userList);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
@@ -58,5 +59,9 @@ public class MainActivity extends AppCompatActivity {
     public void addUser(View view) {
         Intent intent = new Intent(this, LanzaActividad.class);
         startActivityForResult(intent, 1);
+    }
+
+    public void cancel(View view) {
+        finish();
     }
 }
