@@ -32,8 +32,8 @@ public class LanzaActividad extends AppCompatActivity {
     private RadioGroup englishLevelInput;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle state) {
+        super.onCreate(state);
         setContentView(R.layout.activity_lanza_actividad);
 
         // retrieve inputs
@@ -55,6 +55,33 @@ public class LanzaActividad extends AppCompatActivity {
             UnaPersona p = (UnaPersona) getIntent().getSerializableExtra(Constants.PERSON_KEY);
             this.populateInputs(p);
         }
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedState) {
+        this.nameInput.setText(savedState.getString(Constants.LANZA_ACTIVIDAD_NAME_STATUS));
+        this.dateInput.setText(savedState.getString(Constants.LANZA_ACTIVIDAD_DATE_STATUS));
+        this.ageInput.setText(savedState.getString(Constants.LANZA_ACTIVIDAD_AGE_STATUS));
+        this.phoneInput.setText(savedState.getString(Constants.LANZA_ACTIVIDAD_PHONE_STATUS));
+        this.surnameInput.setText(savedState.getString(Constants.LANZA_ACTIVIDAD_SURNAME_STATUS));
+        this.englishLevelInput.check(savedState.getInt(Constants.LANZA_ACTIVIDAD_ENGLISH_LEVEL_STATUS));
+        this.drivingLicenseInput.setChecked(savedState.getBoolean(Constants.LANZA_ACTIVIDAD_DRIVING_LICENSE_STATUS));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        int selectedEnglishLevelButtonId = this.englishLevelInput.getCheckedRadioButtonId();
+        RadioButton englishLevel =  findViewById(selectedEnglishLevelButtonId);
+
+        currentState.putString(Constants.LANZA_ACTIVIDAD_AGE_STATUS, this.ageInput.getText().toString());
+        currentState.putString(Constants.LANZA_ACTIVIDAD_NAME_STATUS, this.nameInput.getText().toString());
+        currentState.putString(Constants.LANZA_ACTIVIDAD_DATE_STATUS, this.dateInput.getText().toString());
+        currentState.putString(Constants.LANZA_ACTIVIDAD_PHONE_STATUS, this.phoneInput.getText().toString());
+        currentState.putString(Constants.LANZA_ACTIVIDAD_ENGLISH_LEVEL_STATUS, englishLevel.getText().toString());
+        currentState.putString(Constants.LANZA_ACTIVIDAD_SURNAME_STATUS, this.surnameInput.getText().toString());
+        currentState.putBoolean(Constants.LANZA_ACTIVIDAD_DRIVING_LICENSE_STATUS, this.drivingLicenseInput.isChecked());
+
+        super.onSaveInstanceState(currentState);
     }
 
     public void populateInputs(UnaPersona p) {

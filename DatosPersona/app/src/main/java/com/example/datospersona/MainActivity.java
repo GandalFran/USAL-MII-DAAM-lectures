@@ -16,9 +16,14 @@ public class MainActivity extends AppCompatActivity {
     private String userList = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle state) {
+        super.onCreate(state);
         setContentView(R.layout.activity_main);
+
+        // retrieve status
+        if (state != null) {
+            this.userList = state.getString(Constants.MAIN_ACTIVITY_USER_LIST_STATUS);
+        }
 
         // retrieve component and update user list
         this.userCanvas = findViewById(R.id.usersTextView);
@@ -26,11 +31,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onRestoreInstanceState(Bundle savedState) {
+        String status = savedState.getString(Constants.MAIN_ACTIVITY_USER_LIST_STATUS);
+        this.userCanvas.setText(status);
+    }
 
-        super.onActivityResult(requestCode, resultCode, data);
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putString(Constants.MAIN_ACTIVITY_USER_LIST_STATUS, this.userCanvas.getText().toString());
+        super.onSaveInstanceState(currentState);
+    }
 
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+    @Override
+    protected void onActivityResult(int code, int result, Intent data) {
+
+        super.onActivityResult(code, result, data);
+
+        if (code == 1 && result == Activity.RESULT_OK && data != null) {
 
             //retrieve
             String name = data.getStringExtra(Constants.INTENT_NAME_KEY);
