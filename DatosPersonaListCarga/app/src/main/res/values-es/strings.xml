@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">DatosPersonaListCarga</string>
+    <string name="title">Lista</string>
+
+    <string name="yes">sí</string>
+    <string name="no">no</string>
+    <string name="unknown">Unknown</string>
+    <string name="english">Inglés: </string>
+    <string name="license">Licencia: </string>
+
+    <string name="english_level_low">Bajo</string>
+    <string name="english_level_medium">Medio</string>
+    <string name="english_level_high">Alto</string>
+
+    <string name="activity_main_add_button">Añadir</string>
+    <string name="activity_main_exit_button">Salir</string>
+    <string name="activity_main_continue_button">Continuar</string>
+    <string name="activity_main_delete_dialog_title">Eliminar</string>
+    <string name="activity_main_delete_dialog_description">¿Desea eliminar al usuario </string>
+
+    <string name="activity_new_user_activity_name_input_text">Nombre</string>
+    <string name="activity_new_user_activity_surname_input_text">Apellidos</string>
+    <string name="activity_new_user_activity_age_input_text">Edad</string>
+    <string name="activity_new_user_activity_phone_input_text">Teléfono</string>
+    <string name="activity_new_user_activity_driving_license_input_text">Carnet de conducir</string>
+    <string name="activity_new_user_activity_english_level_input_text">Nivel de inglés</string>
+    <string name="activity_new_user_activity_english_level_low_input_text">Bajo</string>
+    <string name="activity_new_user_activity_english_level_medium_input_text">Medio</string>
+    <string name="activity_new_user_activity_english_level_high_input_text">Alto</string>
+    <string name="activity_new_user_activity_date_input_text">Fecha de alta</string>
+    <string name="activity_new_user_activity_date_button">Cambiar fecha</string>
+    <string name="activity_new_user_activity_save_button">Guardar</string>
+    <string name="activity_new_user_activity_reset_button">Reiniciar</string>
+    <string name="activity_new_user_activity_cancel_button">Cancelar</string>
+
+</resources>
