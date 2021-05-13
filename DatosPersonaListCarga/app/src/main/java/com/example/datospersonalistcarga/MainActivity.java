@@ -1,11 +1,13 @@
 package com.example.datospersonalistcarga;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -30,8 +32,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String MAIN_ACTIVITY_USER_LIST_STATUS = "MAIN_ACTIVITY_USER_LIST_STATUS";
-
     private ProgressBar progressBar;
     private ListView userCanvas;
     private UnaPersonaAdapter adapter;
@@ -53,24 +53,14 @@ public class MainActivity extends AppCompatActivity {
         this.userCanvas.setOnItemClickListener(this.updateUser);
         this.userCanvas.setOnItemLongClickListener(this.deleteUser);
 
-        // retrieve the instance status
-        //if (state != null) {
-        //    Parcelable status = state.getParcelable(MAIN_ACTIVITY_USER_LIST_STATUS);
-        //    this.adapter.addAll((List<UnaPersona>) state.getSerializable(MAIN_ACTIVITY_USER_LIST_STATUS));
-        //}
+        // if there is data stored retrieve
+        if (UnaPersonaStorage.staticStorage != null){
+            this.adapter.addAll(UnaPersonaStorage.staticStorage);
+            this.adapter.notifyDataSetChanged();
+        }else{
+            UnaPersonaStorage.staticStorage = new ArrayList<>();
+        }
     }
-
-    //@Override
-    //public void onRestoreInstanceState(Bundle savedState) {
-    //    if(savedState != null)
-    //        this.adapter.addAll((List<UnaPersona>) savedState.getSerializable(MAIN_ACTIVITY_USER_LIST_STATUS));
-    //}
-
-    //@Override
-    //public void onSaveInstanceState(Bundle currentState) {
-    //    currentState.put(MAIN_ACTIVITY_USER_LIST_STATUS, (Serializable) this.userList);
-    //    super.onSaveInstanceState(currentState);
-    //}
 
     @Override
     protected void onActivityResult(int code, int result, Intent data) {
@@ -84,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
             // update user list
             this.userList.add(p);
             this.adapter.notifyDataSetChanged();
+
+            // update static storage
+            UnaPersonaStorage.staticStorage.add(p);
         } else if (code == 2 && result == Activity.RESULT_OK && data != null) {
             //retrieve
             int position = data.getIntExtra(LanzaActividad.POSITION_KEY, 0);
@@ -92,7 +85,11 @@ public class MainActivity extends AppCompatActivity {
             // update user list
             this.userList.set(position, p);
             this.adapter.notifyDataSetChanged();
+
+            // update static storage
+            UnaPersonaStorage.staticStorage.set(position, p);
         }
+
     }
 
     public void throwFormulary(View view) {
@@ -127,7 +124,10 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            MainActivity.this.adapter.remove(user);
+                            MainActivity.this.userList.remove(user);
+                            MainActivity.this.adapter.notifyDataSetChanged();
+                            // update static storage
+                            UnaPersonaStorage.staticStorage.remove(user);
                         }
                     })
                     .setNegativeButton(getResources().getString(R.string.no), null)
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void cancel(View view) {
+        UnaPersonaStorage.staticStorage = null;
         finish();
     }
 
@@ -151,9 +152,14 @@ public class MainActivity extends AppCompatActivity {
                         Thread.sleep(ThreadLocalRandom.current().nextInt(1000, 3000));
                     } catch (InterruptedException e) {
                     }
-                    MainActivity.this.adapter.addAll(new UnaPersonaStorage().load());
+                    List<UnaPersona> users = new UnaPersonaStorage().load();
+
+                    MainActivity.this.adapter.addAll(users);
                     MainActivity.this.userCanvas.setVisibility(View.VISIBLE);
                     MainActivity.this.progressBar.setVisibility(View.INVISIBLE);
+
+                    // update static storage
+                    UnaPersonaStorage.staticStorage.addAll(users);
                 }
             });
         });
