@@ -54,23 +54,23 @@ public class MainActivity extends AppCompatActivity {
         this.userCanvas.setOnItemLongClickListener(this.deleteUser);
 
         // retrieve the instance status
-        if (state != null) {
-            Parcelable status = state.getParcelable(MAIN_ACTIVITY_USER_LIST_STATUS);
-            this.adapter.addAll((List<UnaPersona>) state.getSerializable(MAIN_ACTIVITY_USER_LIST_STATUS));
-        }
+        //if (state != null) {
+        //    Parcelable status = state.getParcelable(MAIN_ACTIVITY_USER_LIST_STATUS);
+        //    this.adapter.addAll((List<UnaPersona>) state.getSerializable(MAIN_ACTIVITY_USER_LIST_STATUS));
+        //}
     }
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedState) {
-        if(savedState != null)
-            this.adapter.addAll((List<UnaPersona>) savedState.getSerializable(MAIN_ACTIVITY_USER_LIST_STATUS));
-    }
+    //@Override
+    //public void onRestoreInstanceState(Bundle savedState) {
+    //    if(savedState != null)
+    //        this.adapter.addAll((List<UnaPersona>) savedState.getSerializable(MAIN_ACTIVITY_USER_LIST_STATUS));
+    //}
 
-    @Override
-    public void onSaveInstanceState(Bundle currentState) {
-        currentState.put(MAIN_ACTIVITY_USER_LIST_STATUS, (Serializable) this.userList);
-        super.onSaveInstanceState(currentState);
-    }
+    //@Override
+    //public void onSaveInstanceState(Bundle currentState) {
+    //    currentState.put(MAIN_ACTIVITY_USER_LIST_STATUS, (Serializable) this.userList);
+    //    super.onSaveInstanceState(currentState);
+    //}
 
     @Override
     protected void onActivityResult(int code, int result, Intent data) {
