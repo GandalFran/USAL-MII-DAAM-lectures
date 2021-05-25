@@ -6,7 +6,10 @@
     <string name="no">no</string>
     <string name="unknown">Unknown</string>
     <string name="english">Inglés: </string>
-    <string name="license">Licencia: </string>
+    <string name="date">Fecha: </string>
+    <string name="age">Edad: </string>
+    <string name="drivingLicense">Licencia: </string>
+    <string name="phone">Teléfono: </string>
 
     <string name="english_level_low">Bajo</string>
     <string name="english_level_medium">Medio</string>

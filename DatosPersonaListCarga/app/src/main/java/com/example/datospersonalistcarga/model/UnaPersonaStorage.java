@@ -8,6 +8,8 @@ import java.util.List;
 
 public class UnaPersonaStorage {
 
+    public static List<UnaPersona> staticStorage = null;
+
     public List<UnaPersona> load(){
 
         List<UnaPersona>personaList = new ArrayList<>();

@@ -6,7 +6,10 @@
     <string name="no">no</string>
     <string name="unknown">Unknown</string>
     <string name="english">English: </string>
-    <string name="license">License: </string>
+    <string name="date">Date: </string>
+    <string name="age">Age: </string>
+    <string name="drivingLicense">License: </string>
+    <string name="phone">Phone: </string>
 
     <string name="english_level_low">Low</string>
     <string name="english_level_medium">Medium</string>
@@ -15,7 +18,7 @@
     <string name="activity_main_add_button">Add</string>
     <string name="activity_main_exit_button">Exit</string>
     <string name="activity_main_continue_button">Continue</string>
-    <string name="activity_main_delete_dialog_title">Eliminar</string>
+    <string name="activity_main_delete_dialog_title">Delete</string>
     <string name="activity_main_delete_dialog_description">Do you want to delete the user </string>
 
     <string name="activity_new_user_activity_name_input_text">Name</string>

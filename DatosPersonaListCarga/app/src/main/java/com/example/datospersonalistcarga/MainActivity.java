@@ -1,11 +1,14 @@
 package com.example.datospersonalistcarga;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -13,19 +16,23 @@ import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.datospersonalistcarga.adapter.UnaPersonaAdapter;
 import com.example.datospersonalistcarga.bean.UnaPersona;
 import com.example.datospersonalistcarga.model.UnaPersonaStorage;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String MAIN_ACTIVITY_USER_LIST_STATUS = "MAIN_ACTIVITY_USER_LIST_STATUS";
-
+    private ProgressBar progressBar;
     private ListView userCanvas;
     private UnaPersonaAdapter adapter;
     private List<UnaPersona> userList;
@@ -35,38 +42,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(state);
         setContentView(R.layout.activity_main);
 
-        // create unapersona list and populate
+        // create unapersona list
         this.userList  = new ArrayList<>();
-        this.populateTable();
 
         // retrieve component, set listeners and update user list
         this.userCanvas = findViewById(R.id.usersListView);
+        this.progressBar = findViewById(R.id.progressBar);
         this.adapter = new UnaPersonaAdapter(this, (ArrayList<UnaPersona>) this.userList);
         this.userCanvas.setAdapter(this.adapter);
         this.userCanvas.setOnItemClickListener(this.updateUser);
         this.userCanvas.setOnItemLongClickListener(this.deleteUser);
 
-        // retrieve the instance status
-        if (state != null) {
-            Parcelable status = state.getParcelable(MAIN_ACTIVITY_USER_LIST_STATUS);
-            this.userCanvas.onRestoreInstanceState(status);
+        // if there is data stored retrieve
+        if (UnaPersonaStorage.staticStorage != null){
+            this.adapter.addAll(UnaPersonaStorage.staticStorage);
+            this.adapter.notifyDataSetChanged();
+        }else{
+            UnaPersonaStorage.staticStorage = new ArrayList<>();
         }
-
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedState) {
-        Parcelable state = (Parcelable) savedState.getSerializable(MAIN_ACTIVITY_USER_LIST_STATUS);
-        if(state == null)
-            return;
-        else
-            this.userCanvas.onRestoreInstanceState(state);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle currentState) {
-        currentState.putParcelable(MAIN_ACTIVITY_USER_LIST_STATUS, this.userCanvas.onSaveInstanceState());
-        super.onSaveInstanceState(currentState);
     }
 
     @Override
@@ -81,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
             // update user list
             this.userList.add(p);
             this.adapter.notifyDataSetChanged();
+
+            // update static storage
+            UnaPersonaStorage.staticStorage.add(p);
         } else if (code == 2 && result == Activity.RESULT_OK && data != null) {
             //retrieve
             int position = data.getIntExtra(LanzaActividad.POSITION_KEY, 0);
@@ -89,10 +85,14 @@ public class MainActivity extends AppCompatActivity {
             // update user list
             this.userList.set(position, p);
             this.adapter.notifyDataSetChanged();
+
+            // update static storage
+            UnaPersonaStorage.staticStorage.set(position, p);
         }
+
     }
 
-    public void addUser(View view) {
+    public void throwFormulary(View view) {
         Intent intent = new Intent(this, LanzaActividad.class);
         intent.putExtra(LanzaActividad.IS_MODIFY, false);
         startActivityForResult(intent, 1);
@@ -124,7 +124,10 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            MainActivity.this.adapter.remove(user);
+                            MainActivity.this.userList.remove(user);
+                            MainActivity.this.adapter.notifyDataSetChanged();
+                            // update static storage
+                            UnaPersonaStorage.staticStorage.remove(user);
                         }
                     })
                     .setNegativeButton(getResources().getString(R.string.no), null)
@@ -134,13 +137,32 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void cancel(View view) {
+        UnaPersonaStorage.staticStorage = null;
         finish();
     }
 
-    private void populateTable(){
+    public void loadUserData(View view){
+        MainActivity.this.progressBar.setVisibility(View.VISIBLE);
 
-        // TODO cambiar a cargar en segundo plano
+        Thread th = new Thread(() -> {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(ThreadLocalRandom.current().nextInt(1000, 3000));
+                    } catch (InterruptedException e) {
+                    }
+                    List<UnaPersona> users = new UnaPersonaStorage().load();
 
-        this.userList = new UnaPersonaStorage().load();
+                    MainActivity.this.adapter.addAll(users);
+                    MainActivity.this.userCanvas.setVisibility(View.VISIBLE);
+                    MainActivity.this.progressBar.setVisibility(View.INVISIBLE);
+
+                    // update static storage
+                    UnaPersonaStorage.staticStorage.addAll(users);
+                }
+            });
+        });
+        th.start();
     }
 }

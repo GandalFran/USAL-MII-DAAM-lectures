@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Visualiza3Imagenes</string>
+    <string name="title_activity_images">ImagesActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="image_activity_loading_message">Loading images</string>
+    <string name="image_activity_finish_message">Finished</string>
+    <string name="main_activity_button">Start</string>
+</resources>
