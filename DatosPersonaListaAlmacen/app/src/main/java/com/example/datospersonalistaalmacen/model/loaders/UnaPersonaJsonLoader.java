@@ -29,14 +29,14 @@ public class UnaPersonaJsonLoader implements UrlDataLoader{
     private final static String KEY_DATE = "registro";
 
     @Override
-    public List<UnaPersona> load(String uri){
+    public List<UnaPersona> load(String uri) throws Exception {
 
         JSONObject requestBody = null;
         try {
 
             HttpURLConnection connection = (HttpURLConnection) new URL(uri).openConnection();
             connection.connect();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
 
             String line;
             StringBuilder sb = new StringBuilder();
@@ -51,14 +51,14 @@ public class UnaPersonaJsonLoader implements UrlDataLoader{
 
         } catch (JSONException | IOException | SecurityException e) {
             e.printStackTrace();
-            return null;
+            throw e;
         }
 
         JSONArray rawUsersArray = null;
         try {
             rawUsersArray = requestBody.getJSONArray(KEY_AGENDA);
         } catch (JSONException e) {
-            return null;
+            throw e;
         }
 
         List<UnaPersona> personaList = new ArrayList<>();

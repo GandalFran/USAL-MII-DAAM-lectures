@@ -49,4 +49,8 @@
 
     <string name="activity_main_start_button">Empezar</string>
     <string name="activity_main_settings_button">Configuracion</string>
+    <string name="title_activity_persona_list">PersonaListActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="activity_settings_internal_memory_json">Memoria interna JSON</string>
+    <string name="activity_settings_internal_memory_xml">Memoria interna XML</string>
 </resources>

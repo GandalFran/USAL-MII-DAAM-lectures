@@ -51,4 +51,6 @@
     <string name="activity_main_settings_button">Settings</string>
     <string name="title_activity_persona_list">PersonaListActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="activity_settings_internal_memory_json">Internal memory JSON</string>
+    <string name="activity_settings_internal_memory_xml">Internal memory XML</string>
 </resources>

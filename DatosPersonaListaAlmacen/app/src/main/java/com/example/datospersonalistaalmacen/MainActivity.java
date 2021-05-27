@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.example.datospersonalistaalmacen.model.UnaPersonaStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.datospersonalistaalmacen.SettingsActivity.SETTINGS_KEY;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,4 +40,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivityForResult(intent, 0);
     }
+
 }

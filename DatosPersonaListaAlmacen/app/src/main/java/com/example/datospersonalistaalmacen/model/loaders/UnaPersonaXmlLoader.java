@@ -31,7 +31,7 @@ public class UnaPersonaXmlLoader implements UrlDataLoader{
     private final static String KEY_DATE = "datereg";
 
     @Override
-    public List<UnaPersona> load(String uri){
+    public List<UnaPersona> load(String uri) throws Exception {
         NodeList nl = null;
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -41,7 +41,7 @@ public class UnaPersonaXmlLoader implements UrlDataLoader{
             nl = doc.getElementsByTagName(KEY_AGENDA);
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
-            return null;
+            throw new Exception("parsing error");
         }
 
         List<UnaPersona> personaList = new ArrayList<>();

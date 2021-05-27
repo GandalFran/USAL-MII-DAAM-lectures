@@ -6,6 +6,7 @@ import android.content.ContextWrapper;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.datospersonalistaalmacen.model.export.JSONExporter;
 import com.example.datospersonalistaalmacen.util.Utils;
 import com.example.datospersonalistaalmacen.bean.UnaPersona;
 import com.example.datospersonalistaalmacen.model.contentprovider.StorageProvider;
@@ -104,12 +105,16 @@ public class UnaPersonaStorage implements Parcelable {
             loader = new UnaPersonaJsonLoader();
         }
 
-        List<UnaPersona> newPersonaList;
+        List<UnaPersona> newPersonaList = null;
         try {
             newPersonaList = loader.load(url);
         }catch (Exception e){
-            loader = new UnaPersonaDummyLoader();
-            newPersonaList = loader.load(null);
+            try {
+                loader = new UnaPersonaDummyLoader();
+                newPersonaList = loader.load(null);
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
         }
         this.personaList.addAll(newPersonaList);
     }
@@ -124,10 +129,11 @@ public class UnaPersonaStorage implements Parcelable {
                 e.export(cw, XML_FILE, this.personaList);
                 break;
             case FILE_JSON:
-                e = new XMLExporter();
+                e = new JSONExporter();
                 e.export(cw, JSON_FILE, this.personaList);
                 break;
             case CONTENT_PROVIDER:
+            default:
                 this.storeIntoContentProvider();
                 break;
         }

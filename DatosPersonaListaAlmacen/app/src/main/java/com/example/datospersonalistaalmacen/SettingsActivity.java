@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    public final static String SETTINGS_KEY = "SETTINGS_KEY";
+    public final static String SETTINGS_KEY = "myappsettings";
     public static final String URL_KEY = "URL_KEY";
     public static final String FORMAT_KEY = "FORMAT_KEY";
     public static final String STORAGE_TYPE_KEY = "STORAGE_TYPE_KEY";
@@ -24,7 +25,6 @@ public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences settings = null;
 
     private TextView urlText;
-    private RadioGroup outputFormatRadioGroup;
     private RadioGroup storageTypeRadioGroup;
     private RadioGroup commRadioGroup;
 
@@ -36,7 +36,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         // load elements
         this.urlText = (TextView) findViewById(R.id.urlText);
-        this.outputFormatRadioGroup = (RadioGroup) findViewById(R.id.outputFormatRadioGroup);
         this.storageTypeRadioGroup = (RadioGroup) findViewById(R.id.storageTypeRadioGroup);
         this.commRadioGroup = (RadioGroup) findViewById(R.id.commTypeRadioGroup);
 
@@ -48,18 +47,20 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void loadSettings(){
         this.urlText.setText(this.settings.getString(URL_KEY, ""));
-        this.outputFormatRadioGroup.check(this.settings.getInt(FORMAT_KEY, R.id.xmlFormatRadioButton));
-        this.storageTypeRadioGroup.check(this.settings.getInt(STORAGE_TYPE_KEY, R.id.externalMemoryRadioButton));
-        this.commRadioGroup.check(this.settings.getInt(COMM_TYPE_KEY, R.id.asyncTasksRadioButton));
+        ((RadioButton)this.storageTypeRadioGroup.getChildAt(this.settings.getInt(STORAGE_TYPE_KEY, 0))).setChecked(true);
+        ((RadioButton)this.commRadioGroup.getChildAt(this.settings.getInt(COMM_TYPE_KEY, 0))).setChecked(true);
     }
 
     public void updateSettings(View view){
+        int selectedStorageType = this.storageTypeRadioGroup.indexOfChild(this.storageTypeRadioGroup.findViewById(this.storageTypeRadioGroup.getCheckedRadioButtonId()));
+        int selectedComm = this.commRadioGroup.indexOfChild(this.commRadioGroup.findViewById(this.commRadioGroup.getCheckedRadioButtonId()));
+
         SharedPreferences.Editor e = this.settings.edit();
         e.putString(URL_KEY, this.urlText.getText().toString());
-        e.putInt(FORMAT_KEY, this.outputFormatRadioGroup.getCheckedRadioButtonId());
-        e.putInt(STORAGE_TYPE_KEY, this.storageTypeRadioGroup.getCheckedRadioButtonId());
-        e.putInt(COMM_TYPE_KEY, this.commRadioGroup.getCheckedRadioButtonId());
+        e.putInt(STORAGE_TYPE_KEY, selectedStorageType);
+        e.putInt(COMM_TYPE_KEY, selectedComm);
         e.apply();
+        finish();
     }
 
     public void cancel(View view) {

@@ -153,6 +153,7 @@ public class PersonaListActivity extends Activity {
         UnaPersonaStorage.StorageType type = UnaPersonaStorage.StorageType.values()[PersonaListActivity.this.settings.getInt(SettingsActivity.STORAGE_TYPE_KEY, UnaPersonaStorage.StorageType.CONTENT_PROVIDER.ordinal())];
         ContextWrapper cw = new ContextWrapper(this.getApplicationContext());
         this.storage.store(cw, type);
+        finish();
     }
 
     private void populateTable(){
@@ -163,11 +164,11 @@ public class PersonaListActivity extends Activity {
                 String uri = PersonaListActivity.this.settings.getString(SettingsActivity.URL_KEY, "");
                 PersonaListActivity.this.storage.load(uri);
 
-                try {
-                    Thread.sleep(4000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                //try {
+                //    Thread.sleep(4000);
+                //} catch (InterruptedException e) {
+                //    e.printStackTrace();
+                //}
 
                 runOnUiThread(new Runnable() {
                     @Override
