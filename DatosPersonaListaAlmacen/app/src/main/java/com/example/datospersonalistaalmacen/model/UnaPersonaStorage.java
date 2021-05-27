@@ -1,21 +1,34 @@
 package com.example.datospersonalistaalmacen.model;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.datospersonalistaalmacen.Utils;
+import com.example.datospersonalistaalmacen.util.Utils;
 import com.example.datospersonalistaalmacen.bean.UnaPersona;
 import com.example.datospersonalistaalmacen.model.contentprovider.StorageProvider;
+import com.example.datospersonalistaalmacen.model.export.Exporter;
+import com.example.datospersonalistaalmacen.model.export.XMLExporter;
+import com.example.datospersonalistaalmacen.model.loaders.UnaPersonaDummyLoader;
 import com.example.datospersonalistaalmacen.model.loaders.UnaPersonaJsonLoader;
 import com.example.datospersonalistaalmacen.model.loaders.UnaPersonaXmlLoader;
 import com.example.datospersonalistaalmacen.model.loaders.UrlDataLoader;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class UnaPersonaStorage implements Parcelable {
+
+    private static final String JSON_FILE = "agenda.json";
+    private static final String XML_FILE = "agenda.xml";
+
+    public enum StorageType {
+        FILE_JSON,
+        FILE_XML,
+        CONTENT_PROVIDER
+    }
 
     private final static String KEY_NAME = "NAME";
     private final static String KEY_SURNAME = "SURNAME";
@@ -28,26 +41,14 @@ public class UnaPersonaStorage implements Parcelable {
     private StorageProvider provider;
     private List<UnaPersona> personaList;
 
-    public UnaPersonaStorage(){
+    public UnaPersonaStorage(Context context){
         this.personaList = new ArrayList<>();
-        this.provider = new StorageProvider();
+        this.provider = new StorageProvider(context, this.personaList);
     }
 
     protected UnaPersonaStorage(Parcel in) {
         this.personaList = in.createTypedArrayList(UnaPersona.CREATOR);
     }
-
-    public static final Creator<UnaPersonaStorage> STORAGE_CREATOR = new Creator<UnaPersonaStorage>() {
-        @Override
-        public UnaPersonaStorage createFromParcel(Parcel in) {
-            return new UnaPersonaStorage(in);
-        }
-
-        @Override
-        public UnaPersonaStorage[] newArray(int size) {
-            return new UnaPersonaStorage[size];
-        }
-    };
 
     public static final Creator<UnaPersonaStorage> CREATOR = new Creator<UnaPersonaStorage>() {
         @Override
@@ -93,43 +94,46 @@ public class UnaPersonaStorage implements Parcelable {
     }
 
     // Load
-    public void load(){
-
-       this.personaList = new ArrayList<>();
-
-        personaList.add(new UnaPersona("Pepe", "Perez Martin", "10",
-                Calendar.getInstance().getTime(), "111222333",
-                UnaPersona.EnglishLevel.LOW, false));
-        personaList.add(new UnaPersona("David", "Bisbal", "20",
-                Calendar.getInstance().getTime(), "111222336",
-                UnaPersona.EnglishLevel.MEDIUM, false));
-        personaList.add(new UnaPersona("Martinez", "Arias", "30",
-                Calendar.getInstance().getTime(), "111222334",
-                UnaPersona.EnglishLevel.HIGH, true));
-        personaList.add(new UnaPersona("Pedro", "Juanes Jimenez", "13",
-                Calendar.getInstance().getTime(), "111222331",
-                UnaPersona.EnglishLevel.LOW, true));
-        personaList.add(new UnaPersona("Alejandro", "Santos Sanchez", "25",
-                Calendar.getInstance().getTime(), "111232336",
-                UnaPersona.EnglishLevel.MEDIUM, false));
-        personaList.add(new UnaPersona("Jorge", "Alonso Garcia", "31",
-                Calendar.getInstance().getTime(), "111262334",
-                UnaPersona.EnglishLevel.HIGH, true));
-    }
-
-    public void loadUrl(String url){
+    public void load(String url){
         UrlDataLoader loader = null;
-        if (url.endsWith(".xml")) {
+        if(url == null || url.isEmpty()){
+            loader = new UnaPersonaDummyLoader();
+        }else if (url.endsWith(".xml")) {
             loader = new UnaPersonaXmlLoader();
         }else{
             loader = new UnaPersonaJsonLoader();
         }
-        List<UnaPersona> newPersonaList = loader.load(url);
+
+        List<UnaPersona> newPersonaList;
+        try {
+            newPersonaList = loader.load(url);
+        }catch (Exception e){
+            loader = new UnaPersonaDummyLoader();
+            newPersonaList = loader.load(null);
+        }
         this.personaList.addAll(newPersonaList);
     }
 
     // Store
-    public void storeIntoContentProvider() {
+    public void store(ContextWrapper cw, StorageType type){
+        Exporter e;
+
+        switch (type){
+            case FILE_XML:
+                e = new XMLExporter();
+                e.export(cw, XML_FILE, this.personaList);
+                break;
+            case FILE_JSON:
+                e = new XMLExporter();
+                e.export(cw, JSON_FILE, this.personaList);
+                break;
+            case CONTENT_PROVIDER:
+                this.storeIntoContentProvider();
+                break;
+        }
+    }
+
+    private void storeIntoContentProvider() {
         for (UnaPersona p : this.personaList) {
 
             // build values
@@ -145,7 +149,6 @@ public class UnaPersonaStorage implements Parcelable {
             // store into content provider
             this.provider.insert(StorageProvider.CONTENT_URI, values);
         }
-
     }
 
 }

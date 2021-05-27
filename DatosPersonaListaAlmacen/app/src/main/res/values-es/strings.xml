@@ -12,11 +12,12 @@
     <string name="english_level_medium">Medio</string>
     <string name="english_level_high">Alto</string>
 
-    <string name="activity_main_add_button">Añadir</string>
-    <string name="activity_main_exit_button">Salir</string>
-    <string name="activity_main_continue_button">Continuar</string>
-    <string name="activity_main_delete_dialog_title">Eliminar</string>
-    <string name="activity_main_delete_dialog_description">¿Desea eliminar al usuario </string>
+    <string name="activity_user_list_add_button">Añadir</string>
+    <string name="activity_user_list_exit_button">Salir</string>
+    <string name="activity_user_list_continue_button">Continuar</string>
+    <string name="activity_user_list_delete_dialog_title">Eliminar</string>
+    <string name="activity_user_list_delete_dialog_description">¿Desea eliminar al usuario </string>
+    <string name="activity_user_list_save_button">Save</string>
 
     <string name="activity_new_user_activity_name_input_text">Nombre</string>
     <string name="activity_new_user_activity_surname_input_text">Apellidos</string>
@@ -33,4 +34,19 @@
     <string name="activity_new_user_activity_reset_button">Reiniciar</string>
     <string name="activity_new_user_activity_cancel_button">Cancelar</string>
 
+    <string name="activity_settings_data_format">Seleccione formato de salida</string>
+    <string name="activity_settings_xml_format">formato XML</string>
+    <string name="activity_settings_json_format">formato JSON</string>
+    <string name="activity_settings_url">URL</string>
+    <string name="activity_settings_storage_type">Seleccione timpo de almacenamiento</string>
+    <string name="activity_settings_internal_memory">Memoria interna</string>
+    <string name="activity_settings_content_provider">Proveedor de contenidos</string>
+    <string name="activity_settings_comm_type">Seleccione tipo de comunicacion</string>
+    <string name="activity_settings_async_tasks_type">Tarea asincrona</string>
+    <string name="activity_settings_advertisement_type">Anuncio</string>
+    <string name="activity_settings_save_button">Guardar</string>
+    <string name="activity_settings_cancel_button">Cancelar</string>
+
+    <string name="activity_main_start_button">Empezar</string>
+    <string name="activity_main_settings_button">Configuracion</string>
 </resources>

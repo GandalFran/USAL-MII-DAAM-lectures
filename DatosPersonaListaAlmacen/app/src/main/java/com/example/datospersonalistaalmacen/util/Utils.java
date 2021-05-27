@@ -1,4 +1,4 @@
-package com.example.datospersonalistaalmacen;
+package com.example.datospersonalistaalmacen.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -12,11 +12,12 @@
     <string name="english_level_medium">Medium</string>
     <string name="english_level_high">High</string>
 
-    <string name="activity_main_add_button">Add</string>
-    <string name="activity_main_exit_button">Exit</string>
-    <string name="activity_main_continue_button">Continue</string>
-    <string name="activity_main_delete_dialog_title">Eliminar</string>
-    <string name="activity_main_delete_dialog_description">Do you want to delete the user </string>
+    <string name="activity_user_list_add_button">Add</string>
+    <string name="activity_user_list_exit_button">Exit</string>
+    <string name="activity_user_list_continue_button">Continue</string>
+    <string name="activity_user_list_delete_dialog_title">Delete</string>
+    <string name="activity_user_list_delete_dialog_description">Do you want to delete the user </string>
+    <string name="activity_user_list_save_button">Save</string>
 
     <string name="activity_new_user_activity_name_input_text">Name</string>
     <string name="activity_new_user_activity_surname_input_text">Surname</string>
@@ -33,5 +34,21 @@
     <string name="activity_new_user_activity_reset_button">Restart</string>
     <string name="activity_new_user_activity_cancel_button">Cancel</string>
 
+    <string name="activity_settings_data_format">Select output format</string>
+    <string name="activity_settings_xml_format">XML formant</string>
+    <string name="activity_settings_json_format">JSON format</string>
+    <string name="activity_settings_url">URL</string>
+    <string name="activity_settings_storage_type">Select storage type</string>
+    <string name="activity_settings_internal_memory">Internal memory</string>
+    <string name="activity_settings_content_provider">Content Provider</string>
+    <string name="activity_settings_comm_type">Communication</string>
+    <string name="activity_settings_async_tasks_type">Async task</string>
+    <string name="activity_settings_advertisement_type">Advertisement</string>
+    <string name="activity_settings_save_button">Save</string>
+    <string name="activity_settings_cancel_button">Cancel</string>
 
+    <string name="activity_main_start_button">Start</string>
+    <string name="activity_main_settings_button">Settings</string>
+    <string name="title_activity_persona_list">PersonaListActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 </resources>

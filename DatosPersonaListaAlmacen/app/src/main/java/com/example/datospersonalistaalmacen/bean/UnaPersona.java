@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class UnaPersona implements Serializable, Parcelable {
+public class UnaPersona implements Parcelable {
 
     public enum EnglishLevel {
         LOW, MEDIUM, HIGH
@@ -40,7 +40,7 @@ public class UnaPersona implements Serializable, Parcelable {
         this.englishLevel = EnglishLevel.valueOf(in.readString());
     }
 
-    public static final Creator<UnaPersona> UNA_PERSONA_CREATOR = new Creator<UnaPersona>() {
+    public static final Creator<UnaPersona> CREATOR = new Creator<UnaPersona>() {
         @Override
         public UnaPersona createFromParcel(Parcel in) {
             return new UnaPersona(in);

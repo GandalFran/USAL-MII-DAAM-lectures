@@ -8,17 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.datospersonalistaalmacen.MainActivity;
 import com.example.datospersonalistaalmacen.R;
 
-import com.example.datospersonalistaalmacen.Utils;
+import com.example.datospersonalistaalmacen.util.Utils;
 import com.example.datospersonalistaalmacen.bean.UnaPersona;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class UnaPersonaAdapter extends ArrayAdapter<UnaPersona> {

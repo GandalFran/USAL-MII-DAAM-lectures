@@ -58,7 +58,7 @@ public class UnaPersonaJsonLoader implements UrlDataLoader{
         try {
             rawUsersArray = requestBody.getJSONArray(KEY_AGENDA);
         } catch (JSONException e) {
-            return null
+            return null;
         }
 
         List<UnaPersona> personaList = new ArrayList<>();

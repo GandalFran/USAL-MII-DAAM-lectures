@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.datospersonalistaalmacen.Utils;
+import com.example.datospersonalistaalmacen.util.Utils;
 import com.example.datospersonalistaalmacen.bean.UnaPersona;
 import com.example.datospersonalistaalmacen.model.UnaPersonaStorage;
+
+import java.util.List;
 
 public class StorageProviderHelper extends SQLiteOpenHelper {
 
@@ -21,8 +23,13 @@ public class StorageProviderHelper extends SQLiteOpenHelper {
     public final static String KEY_ENGLISH_LEVEL = "ENGLISH_LEVEL";
     public final static String KEY_DATE = "DATE";
 
-    public StorageProviderHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    private Context context;
+    private List<UnaPersona> personaList;
+
+    public StorageProviderHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, List<UnaPersona> personaList) {
         super(context, name, factory, version);
+        this.personaList = personaList;
+        this.context = context;
     }
 
     @Override
@@ -30,7 +37,7 @@ public class StorageProviderHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase database) {
         this.createTable(database);
-        this.load(database);
+        this.load(database, this.context);
     }
 
     private void createTable(SQLiteDatabase database) {
@@ -47,9 +54,9 @@ public class StorageProviderHelper extends SQLiteOpenHelper {
         database.execSQL(select);
     }
 
-    private void load(SQLiteDatabase database) {
-        UnaPersonaStorage storage = new UnaPersonaStorage();
-        for (UnaPersona p: storage.getPersonaList()) {
+    private void load(SQLiteDatabase database, Context context) {
+        UnaPersonaStorage storage = new UnaPersonaStorage(context);
+        for (UnaPersona p: this.personaList) {
             ContentValues values = new ContentValues();
             values.put(KEY_NAME, p.getName());
             values.put(KEY_SURNAME, p.getSurname());

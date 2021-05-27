@@ -104,7 +104,7 @@ public class UnaPersonaXmlLoader implements UrlDataLoader{
         Date date = null;
         try {
             date = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
-        } catch (ParseException e) {
+        } catch (ParseException ex) {
             date = new Date();
         }
 

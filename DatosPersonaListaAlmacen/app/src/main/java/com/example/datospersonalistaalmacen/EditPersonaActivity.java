@@ -15,20 +15,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.datospersonalistaalmacen.bean.UnaPersona;
+import com.example.datospersonalistaalmacen.util.Utils;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class LanzaActividad extends AppCompatActivity {
+public class EditPersonaActivity extends AppCompatActivity {
 
-    public static final String LANZA_ACTIVIDAD_AGE_STATUS = "LANZA_ACTIVIDAD_AGE_STATUS";
-    public static final String LANZA_ACTIVIDAD_NAME_STATUS = "LANZA_ACTIVIDAD_NAME_STATUS";
-    public static final String LANZA_ACTIVIDAD_DATE_STATUS = "LANZA_ACTIVIDAD_DATE_STATUS";
-    public static final String LANZA_ACTIVIDAD_PHONE_STATUS = "LANZA_ACTIVIDAD_PHONE_STATUS";
-    public static final String LANZA_ACTIVIDAD_SURNAME_STATUS = "LANZA_ACTIVIDAD_SURNAME_STATUS";
-    public static final String LANZA_ACTIVIDAD_ENGLISH_LEVEL_STATUS = "LANZA_ACTIVIDAD_ENGLISH_LEVEL_STATUS";
-    public static final String LANZA_ACTIVIDAD_DRIVING_LICENSE_STATUS = "LANZA_ACTIVIDAD_DRIVING_LICENSE_STATUS";
+    public static final String EDIT_PERSONA_AGE_STATUS = "EDIT_PERSONA_AGE_STATUS";
+    public static final String EDIT_PERSONA_NAME_STATUS = "EDIT_PERSONA_NAME_STATUS";
+    public static final String EDIT_PERSONA_DATE_STATUS = "EDIT_PERSONA_DATE_STATUS";
+    public static final String EDIT_PERSONA_PHONE_STATUS = "EDIT_PERSONA_PHONE_STATUS";
+    public static final String EDIT_PERSONA_SURNAME_STATUS = "EDIT_PERSONA_SURNAME_STATUS";
+    public static final String EDIT_PERSONA_ENGLISH_LEVEL_STATUS = "EDIT_PERSONA_ENGLISH_LEVEL_STATUS";
+    public static final String EDIT_PERSONA_DRIVING_LICENSE_STATUS = "EDIT_PERSONA_DRIVING_LICENSE_STATUS";
 
     public static final String PERSON_KEY = "person";
     public static final String POSITION_KEY = "position";
@@ -47,7 +48,19 @@ public class LanzaActividad extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle state) {
         super.onCreate(state);
-        setContentView(R.layout.activity_lanza_actividad);
+        setContentView(R.layout.activity_edit_persona);
+
+        // recover instance state
+        UnaPersona person = null;
+        if (state != null) {
+            person.setName(state.getString(EDIT_PERSONA_NAME_STATUS));
+            person.setSurname(EDIT_PERSONA_SURNAME_STATUS);
+            person.setAge(state.getString(EDIT_PERSONA_AGE_STATUS));
+            person.setPhone(state.getString(EDIT_PERSONA_PHONE_STATUS));
+            person.setDrivingLicense(state.getBoolean(EDIT_PERSONA_DRIVING_LICENSE_STATUS));
+            person.setEnglishLevel(UnaPersona.EnglishLevel.values()[state.getInt(EDIT_PERSONA_ENGLISH_LEVEL_STATUS)]);
+            person.setDate(Utils.fromDateString(state.getString(EDIT_PERSONA_DATE_STATUS)));
+        }
 
         // retrieve inputs
         this.ageInput = findViewById(R.id.ageInput);
@@ -72,13 +85,13 @@ public class LanzaActividad extends AppCompatActivity {
 
     @Override
     public void onRestoreInstanceState(Bundle savedState) {
-        this.nameInput.setText(savedState.getString(LANZA_ACTIVIDAD_NAME_STATUS));
-        this.dateInput.setText(savedState.getString(LANZA_ACTIVIDAD_DATE_STATUS));
-        this.ageInput.setText(savedState.getString(LANZA_ACTIVIDAD_AGE_STATUS));
-        this.phoneInput.setText(savedState.getString(LANZA_ACTIVIDAD_PHONE_STATUS));
-        this.surnameInput.setText(savedState.getString(LANZA_ACTIVIDAD_SURNAME_STATUS));
-        this.englishLevelInput.check(savedState.getInt(LANZA_ACTIVIDAD_ENGLISH_LEVEL_STATUS));
-        this.drivingLicenseInput.setChecked(savedState.getBoolean(LANZA_ACTIVIDAD_DRIVING_LICENSE_STATUS));
+        this.nameInput.setText(savedState.getString(EDIT_PERSONA_NAME_STATUS));
+        this.dateInput.setText(savedState.getString(EDIT_PERSONA_DATE_STATUS));
+        this.ageInput.setText(savedState.getString(EDIT_PERSONA_AGE_STATUS));
+        this.phoneInput.setText(savedState.getString(EDIT_PERSONA_PHONE_STATUS));
+        this.surnameInput.setText(savedState.getString(EDIT_PERSONA_SURNAME_STATUS));
+        this.englishLevelInput.check(savedState.getInt(EDIT_PERSONA_ENGLISH_LEVEL_STATUS));
+        this.drivingLicenseInput.setChecked(savedState.getBoolean(EDIT_PERSONA_DRIVING_LICENSE_STATUS));
     }
 
     @Override
@@ -86,13 +99,13 @@ public class LanzaActividad extends AppCompatActivity {
         int selectedEnglishLevelButtonId = this.englishLevelInput.getCheckedRadioButtonId();
         RadioButton englishLevel =  findViewById(selectedEnglishLevelButtonId);
 
-        currentState.putString(LANZA_ACTIVIDAD_AGE_STATUS, this.ageInput.getText().toString());
-        currentState.putString(LANZA_ACTIVIDAD_NAME_STATUS, this.nameInput.getText().toString());
-        currentState.putString(LANZA_ACTIVIDAD_DATE_STATUS, this.dateInput.getText().toString());
-        currentState.putString(LANZA_ACTIVIDAD_PHONE_STATUS, this.phoneInput.getText().toString());
-        currentState.putString(LANZA_ACTIVIDAD_ENGLISH_LEVEL_STATUS, englishLevel.getText().toString());
-        currentState.putString(LANZA_ACTIVIDAD_SURNAME_STATUS, this.surnameInput.getText().toString());
-        currentState.putBoolean(LANZA_ACTIVIDAD_DRIVING_LICENSE_STATUS, this.drivingLicenseInput.isChecked());
+        currentState.putString(EDIT_PERSONA_AGE_STATUS, this.ageInput.getText().toString());
+        currentState.putString(EDIT_PERSONA_NAME_STATUS, this.nameInput.getText().toString());
+        currentState.putString(EDIT_PERSONA_DATE_STATUS, this.dateInput.getText().toString());
+        currentState.putString(EDIT_PERSONA_PHONE_STATUS, this.phoneInput.getText().toString());
+        currentState.putString(EDIT_PERSONA_ENGLISH_LEVEL_STATUS, englishLevel.getText().toString());
+        currentState.putString(EDIT_PERSONA_SURNAME_STATUS, this.surnameInput.getText().toString());
+        currentState.putBoolean(EDIT_PERSONA_DRIVING_LICENSE_STATUS, this.drivingLicenseInput.isChecked());
 
         super.onSaveInstanceState(currentState);
     }

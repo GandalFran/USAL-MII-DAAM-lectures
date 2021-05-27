@@ -17,8 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LanzaActividad">
-        </activity>
+        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".PersonaListActivity"/>
+        <activity android:name=".EditPersonaActivity" />
 
         <provider
             android:name=".model.contentprovider.StorageProvider"

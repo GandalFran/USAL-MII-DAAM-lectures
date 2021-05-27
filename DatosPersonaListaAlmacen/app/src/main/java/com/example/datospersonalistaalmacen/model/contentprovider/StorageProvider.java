@@ -3,12 +3,17 @@ package com.example.datospersonalistaalmacen.model.contentprovider;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.TextUtils;
+
+import com.example.datospersonalistaalmacen.bean.UnaPersona;
+
+import java.util.List;
 
 public class StorageProvider extends ContentProvider {
 
@@ -24,11 +29,19 @@ public class StorageProvider extends ContentProvider {
 
     private static final UriMatcher um = new UriMatcher(UriMatcher.NO_MATCH);
 
-    private StorageProviderHelper provider;
+    private final StorageProviderHelper provider;
 
     static {
         um.addURI(AUTHORITY_NAME, StorageProviderHelper.TABLE_NAME, CODE_ALL_ENTRIES);
         um.addURI(AUTHORITY_NAME, String.format("%s/#", StorageProviderHelper.TABLE_NAME), CODE_SINGLE_ENTRY);
+    }
+
+    public StorageProvider(){
+        this.provider = null;
+    }
+
+    public StorageProvider(Context context, List<UnaPersona> personaList){
+        this.provider = new StorageProviderHelper(context, StorageProviderHelper.TABLE_NAME, null, 1, personaList);
     }
 
     @Override
@@ -84,6 +97,7 @@ public class StorageProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(userURI, null);
             return userURI;
         }
+        return null;
     }
 
     @Override
