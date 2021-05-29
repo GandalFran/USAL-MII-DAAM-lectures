@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -184,7 +185,7 @@ public class EditPersonaActivity extends AppCompatActivity {
         // NOTE: it also clears activity stack with FLAG_ACTIVITY_CLEAR_TOP
         Intent intentResult = new Intent(this, MainActivity.class);
         intentResult.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intentResult.putExtra(PERSON_KEY, p);
+        intentResult.putExtra(PERSON_KEY, (Parcelable) p);
         if(this.isModify){
             int position = this.getIntent().getIntExtra(POSITION_KEY, 0);
             intentResult.putExtra(POSITION_KEY,position);

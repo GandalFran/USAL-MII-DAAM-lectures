@@ -16,14 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.datospersonalistaalmacen.adapter.UnaPersonaAdapter;
 import com.example.datospersonalistaalmacen.bean.UnaPersona;
 import com.example.datospersonalistaalmacen.model.UnaPersonaStorage;
 
 import java.util.ArrayList;
 
-public class PersonaListActivity extends Activity {
+public class PersonaListActivity extends AppCompatActivity {
 
+    private static long SLEEP_TIME = 3000;
     public static final String PERSONA_LIST_ACTIVITY_USER_LIST_STATUS = "PERSONA_LIST_ACTIVITY_USER_LIST_STATUS";
 
     private LinearLayout buttonsLayout;
@@ -118,7 +121,7 @@ public class PersonaListActivity extends Activity {
             // Add extra attributes
             intent.putExtra(EditPersonaActivity.IS_MODIFY, true);
             intent.putExtra(EditPersonaActivity.POSITION_KEY, position);
-            intent.putExtra(EditPersonaActivity.PERSON_KEY, PersonaListActivity.this.adapter.getItem(position));
+            intent.putExtra(EditPersonaActivity.PERSON_KEY, (Parcelable) PersonaListActivity.this.adapter.getItem(position));
 
             startActivityForResult(intent, 2);
         }
@@ -164,11 +167,11 @@ public class PersonaListActivity extends Activity {
                 String uri = PersonaListActivity.this.settings.getString(SettingsActivity.URL_KEY, "");
                 PersonaListActivity.this.storage.load(uri);
 
-                //try {
-                //    Thread.sleep(4000);
-                //} catch (InterruptedException e) {
-                //    e.printStackTrace();
-                //}
+                try {
+                    Thread.sleep(SLEEP_TIME);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 runOnUiThread(new Runnable() {
                     @Override

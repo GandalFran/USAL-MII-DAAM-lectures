@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class UnaPersona implements Parcelable {
+public class UnaPersona implements Parcelable, Serializable {
 
     public enum EnglishLevel {
         LOW, MEDIUM, HIGH
@@ -29,6 +29,10 @@ public class UnaPersona implements Parcelable {
         this.phone = phone;
         this.englishLevel = englishLevel;
         this.drivingLicense = drivingLicense;
+
+        if(this.date == null){
+            this.date = new Date();
+        }
     }
 
     protected UnaPersona(Parcel in) {
@@ -38,6 +42,10 @@ public class UnaPersona implements Parcelable {
         this.phone = in.readString();
         this.drivingLicense = in.readByte() != 0;
         this.englishLevel = EnglishLevel.valueOf(in.readString());
+
+        if(this.date == null){
+            this.date = new Date();
+        }
     }
 
     public static final Creator<UnaPersona> CREATOR = new Creator<UnaPersona>() {

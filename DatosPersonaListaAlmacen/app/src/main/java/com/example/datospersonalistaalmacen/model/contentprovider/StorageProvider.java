@@ -29,6 +29,7 @@ public class StorageProvider extends ContentProvider {
 
     private static final UriMatcher um = new UriMatcher(UriMatcher.NO_MATCH);
 
+    private final Context context;
     private final StorageProviderHelper provider;
 
     static {
@@ -38,9 +39,11 @@ public class StorageProvider extends ContentProvider {
 
     public StorageProvider(){
         this.provider = null;
+        this.context = null;
     }
 
     public StorageProvider(Context context, List<UnaPersona> personaList){
+        this.context = context;
         this.provider = new StorageProviderHelper(context, StorageProviderHelper.TABLE_NAME, null, 1, personaList);
     }
 
@@ -94,7 +97,7 @@ public class StorageProvider extends ContentProvider {
         long id = db.insert(StorageProviderHelper.TABLE_NAME,null, cv);
         if (id > 0) {
             Uri userURI = ContentUris.withAppendedId(CONTENT_URI, id);
-            getContext().getContentResolver().notifyChange(userURI, null);
+            this.context.getContentResolver().notifyChange(userURI, null);
             return userURI;
         }
         return null;
@@ -113,7 +116,7 @@ public class StorageProvider extends ContentProvider {
 
             id = db.update(StorageProviderHelper.TABLE_NAME, values, query, selectionArgs);
         }
-        getContext().getContentResolver().notifyChange(uri, null);
+        this.context.getContentResolver().notifyChange(uri, null);
         return id;
     }
 
@@ -129,7 +132,7 @@ public class StorageProvider extends ContentProvider {
                 query = String.format("%s AND (%s)",query, selection);
             id = db.delete(StorageProviderHelper.TABLE_NAME, query, selectionArgs);
         }
-        getContext().getContentResolver().notifyChange(uri, null);
+        this.context.getContentResolver().notifyChange(uri, null);
         return id;
     }
 }
